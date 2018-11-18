@@ -14,8 +14,44 @@ namespace TechJobsConsole
         {
             LoadData();
             return AllJobs;
-        }
+        } 
+        public static List<Dictionary<string, string>> FindByValue(string value)
+        {
+            // load data, if not already loaded
+            LoadData();
 
+            //list of jobs that we will ultimately return. starts empty.
+            List<Dictionary<string, string>> matchingJobs = new List<Dictionary<string, string>>();
+
+
+            //for each job in all our jobs
+            foreach (Dictionary<string, string> job in AllJobs)
+            {
+
+                bool shouldAdd = false;
+                //for each value of this job
+                foreach(KeyValuePair<string, string> jobAttributes in job)
+                {
+                    //check whether job's value contains our value
+                    if (jobAttributes.Value.ToLower().Contains(value.ToLower()))
+                    {
+                        //if it does, add this job to our list of matching jobs
+                        shouldAdd = true;
+                    }
+
+                }
+
+                if (shouldAdd)
+                {
+                    matchingJobs.Add(job);
+                }
+                
+
+            }
+
+            return matchingJobs;
+
+        }
         /*
          * Returns a list of all values contained in a given column,
          * without duplicates. 
@@ -49,8 +85,7 @@ namespace TechJobsConsole
             {
                 string aValue = row[column];
 
-                if (aValue.Contains(value))
-                {
+                if (aValue.ToLower().Contains(value.ToLower())) {
                     jobs.Add(row);
                 }
             }
@@ -75,7 +110,7 @@ namespace TechJobsConsole
             {
                 while (reader.Peek() >= 0)
                 {
-                    string line = reader.ReadLine();
+                string line = reader.ReadLine();
                     string[] rowArrray = CSVRowToStringArray(line);
                     if (rowArrray.Length > 0)
                     {
