@@ -120,6 +120,11 @@ namespace TechJobsConsole
 
         private static void PrintJobs(List<Dictionary<string, string>> someJobs)
         {
+            if (someJobs.Count == 0)
+            {
+                Console.WriteLine("There are no jobs found!");
+            }
+
             //loop over list of jobs
             foreach (Dictionary<string, string> job in someJobs)
             {
@@ -128,6 +133,7 @@ namespace TechJobsConsole
                 //loop over all the keys and values
                 foreach (KeyValuePair<string, string> jobAttributes in job)
                 {
+                    
                     //now we have a key and value
                     //print key: value
                     Console.WriteLine(jobAttributes.Key + ": " + jobAttributes.Value);
